@@ -74,4 +74,4 @@ mysql database
 EC2 Instances and Security Groups
 
 **WordPress Welcome Page**
-Please check the screenshots/ folder for images showing the configurations.
+Please check the Screenshots/ folder for images showing the configurations.
