@@ -1,1 +1,60 @@
+Create two instances and configure security groups inbound rules,refer Report on Week 1 AWS Cloud Task.pdf/ for configuration settings.
+Connect wordpress server to any SSH client ,(Mobaxterm)
+commands executed in the task:
+
+1.Updates the package list to make sure you have the latest information about available packages.
+sudo apt update
+2.Installs the Apache2 web server, which is necessary to host websites. The -y option automatically confirms the installation.
+sudo apt install apache2 -y
+3.Installs PHP (a server-side scripting language) and the PHP MySQL connector (required to connect PHP applications to a MySQL database).
+sudo apt install php php-mysql -y
+4.Changes the directory to the default web root directory where web files are stored.
+cd /var/www/html
+5.Downloads the latest WordPress package from the official WordPress website.
+sudo wget https://wordpress.org/latest.tar.gz
+6.Extracts the downloaded WordPress package.
+sudo tar -xvzf latest.tar.gz
+7.Changes the directory to the WordPress folder.
+cd wordpress
+ 
+
+now connect mysql server using mobaxterm,
+
+1.Updates the package list to ensure you have the latest information about available packages.
+sudo apt update
+2.Installs the MySQL server to manage databases. The -y option automatically confirms the installation.
+sudo apt install mysql-server -y;
+3.Logs in to the MySQL server as the root user. The -p option prompts for the password.
+sudo mysql -u root -p
+4.MYSQL commands inside the mysql server
+mysql>CREATE DATABASE WORDPRESS;
+mysql>CREATE USER 'WP-USER'@'%' IDENTIFIED BY 'Ganesh'
+mysql>GRANT ALL PRIVILEGES ON WORDPRESS.* TO 'WP-USER'@'%';
+mysql>EXIT
+5.Opens the MySQL configuration file to allow remote connections by setting the bind address to 0.0.0.0
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+bind-address = 0.0.0.0
+mysql-x-blind=0.0.0.0
+6.Restarts the MySQL service to apply the configuration changes.
+sudo systemctl restart mysql
+
+
+comeback to the  wordpress server,
+8.Renames the sample configuration file to wp-config.php for WordPress configuration.
+sudo mv wp-config-sample.php wp-config.php
+9.Opens the WordPress configuration file to set up the database name, username, password, and MySQL server's private IP address.
+sudo nanon wp-config.php
+name -WORDPRESS
+username- WP-USER
+password- Ganesh
+Hostname-(private ip of mysql server)
+10Restarts the Apache2 web server to apply the changes.
+sudo systemctl restart apache2
+11.Opens the Apache configuration file to set the document root to
+sudo nano 000-default.conf
+DOCUMENT ROOT  /var/www/html/wordpress
+12.Restarts the Apache2 server to apply the configuration changes.
+sudo systemctl restart apache2
+
+Configure your login details in the WordPress setup and check if the website is deployed successfully :)
 
